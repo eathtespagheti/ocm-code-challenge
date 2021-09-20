@@ -20,5 +20,6 @@ class TuttiICorsiSpider(scrapy.Spider):
                 'title': title,
                 'link': link,
                 'status': course.css('div.info-card2 div::text').get(),
-                'teacher': course.css('div.docente-box::text').get()
+                'teacher': course.css('div.docente-box::text').get(),
+                'short_description': course.css('p.abstract-box::text').get()
             }
