@@ -1,0 +1,17 @@
+version: "3.8"        
+
+services:
+
+  crawler:
+    build:
+      context: ../
+      dockerfile: stack/dev/Dockerfile
+    image: eathtespagheti/code-challenge:dev
+    restart: always
+    user: 1000:1000
+    environment: 
+      - DJANGO_SETTINGS_MODULE=federica_crawler.settings
+    volumes:
+      - ../src/federica_crawler:/webapp
+    ports: 
+      - 8000:8000
