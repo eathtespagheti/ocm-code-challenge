@@ -3,7 +3,7 @@ import scrapy
 
 class TuttiICorsiSpider(scrapy.Spider):
     name = 'tutti_i_corsi'
-    allowed_domains = ['www.federica.eu/tutti-i-mooc']
+    allowed_domains = ['federica.eu']
     start_urls = ['http://www.federica.eu/tutti-i-mooc/']
 
     def parse_base_info(self, response):
