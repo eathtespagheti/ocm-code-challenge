@@ -2,8 +2,8 @@ import scrapy
 from .models import CourseItem
 
 
-class TuttiICorsiSpider(scrapy.Spider):
-    name = 'apps.crawler.federica.spiders.tutti_i_corsi'
+class CorsiSpider(scrapy.Spider):
+    name = 'apps.crawler.federica.spiders.corsi'
     allowed_domains = ['federica.eu']
     url = 'http://www.federica.eu/tutti-i-mooc'
 
@@ -17,7 +17,7 @@ class TuttiICorsiSpider(scrapy.Spider):
 
         course['description'] = ' '.join(
             description_div.css('p::text, strong::text').getall())
-        return course.__dict__
+        return course.__dict__.get('_values', None)
 
     def parse_base_info(self, response):
         for course in response.css('div.mooc-main-box'):
@@ -43,7 +43,7 @@ class TuttiICorsiSpider(scrapy.Spider):
             if self.deep:
                 yield details_request
             else:
-                yield out.__dict__
+                yield out.__dict__.get('_values', None)
 
     def start_requests(self):
         self.lang = getattr(self, 'lang', 'it')
