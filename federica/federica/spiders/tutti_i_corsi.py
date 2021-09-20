@@ -5,11 +5,16 @@ from .models import Course
 class TuttiICorsiSpider(scrapy.Spider):
     name = 'tutti_i_corsi'
     allowed_domains = ['federica.eu']
-    start_urls = ['http://www.federica.eu/tutti-i-mooc/']
+    url = 'http://www.federica.eu/tutti-i-mooc'
 
     def parse_details(self, response, course: Course):
-        description_div = response.xpath(
-            '//div[./*[contains(text(), "Descrizione")]]')
+        if self.lang == 'it':
+            description_div = response.xpath(
+                '//div[./*[contains(text(), "Descrizione")]]')
+        elif self.lang == 'en':
+            description_div = response.xpath(
+                '//div[./*[contains(text(), "Description")]]')
+
         course.description = ' '.join(
             description_div.css('p::text, strong::text').getall())
         return course.__dict__
@@ -24,7 +29,7 @@ class TuttiICorsiSpider(scrapy.Spider):
                 out.title = link.css('::text').get()
                 out.link = response.urljoin(link.attrib['href'])
                 details_request = scrapy.Request(
-                    out.link+'&lang=it', self.parse_details, cb_kwargs=dict(course=out))
+                    out.link+self.lang_parameter, self.parse_details, cb_kwargs=dict(course=out))
             else:
                 out.title = titolo_box.css('::text').get()
                 out.link = None
@@ -37,5 +42,9 @@ class TuttiICorsiSpider(scrapy.Spider):
 
             yield details_request
 
-    def parse(self, response):
-        return self.parse_base_info(response)
+    def start_requests(self):
+        self.lang = getattr(self, 'lang', 'it')
+        self.lang_parameter = '&lang=' + self.lang
+        if self.lang == 'en':
+            self.url = 'http://www.federica.eu/' + self.lang + '/all-moocs'
+        yield scrapy.Request(self.url, self.parse_base_info)
