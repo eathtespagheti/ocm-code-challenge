@@ -20,7 +20,7 @@ class TuttiICorsiSpider(scrapy.Spider):
         return course.__dict__
 
     def parse_base_info(self, response):
-        for course in response.css('div.mooc-main-box')[0:5]:
+        for course in response.css('div.mooc-main-box'):
             out = Course()
 
             titolo_box = course.css('div.titolo-box')
@@ -40,11 +40,17 @@ class TuttiICorsiSpider(scrapy.Spider):
             out.teacher = course.css('div.docente-box::text').get()
             out.short_description = course.css('p.abstract-box::text').get()
 
-            yield details_request
+            if self.deep:
+                yield details_request
+            else:
+                yield out.__dict__
 
     def start_requests(self):
         self.lang = getattr(self, 'lang', 'it')
         self.lang_parameter = '&lang=' + self.lang
+        self.deep = getattr(self, 'deep', '')
+        if self.deep == 'True':
+            self.deep = True
         if self.lang == 'en':
             self.url = 'http://www.federica.eu/' + self.lang + '/all-moocs'
         yield scrapy.Request(self.url, self.parse_base_info)
