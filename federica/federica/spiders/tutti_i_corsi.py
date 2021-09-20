@@ -6,6 +6,13 @@ class TuttiICorsiSpider(scrapy.Spider):
     allowed_domains = ['federica.eu']
     start_urls = ['http://www.federica.eu/tutti-i-mooc/']
 
+    def parse_details(self, response):
+        description_div = response.xpath(
+            '//div[./*[contains(text(), "Descrizione")]]')
+        yield {
+            'description': ' '.join(description_div.css('p::text, strong::text').getall())
+        }
+
     def parse_base_info(self, response):
         for course in response.css('div.mooc-main-box')[0:5]:
             titolo_box = course.css('div.titolo-box')
