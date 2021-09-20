@@ -19,6 +19,7 @@ class TuttiICorsiSpider(scrapy.Spider):
             yield {
                 'title': title,
                 'link': link,
+                'area': course.xpath('div/div[contains(@class, \'area-segmento\')]/text()').get(),
                 'status': course.css('div.info-card2 div::text').get(),
                 'teacher': course.css('div.docente-box::text').get(),
                 'short_description': course.css('p.abstract-box::text').get()
