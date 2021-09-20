@@ -19,5 +19,6 @@ class TuttiICorsiSpider(scrapy.Spider):
             yield {
                 'title': title,
                 'link': link,
-                'status': course.css('div.info-card2 div::text').get()
+                'status': course.css('div.info-card2 div::text').get(),
+                'teacher': course.css('div.docente-box::text').get()
             }
