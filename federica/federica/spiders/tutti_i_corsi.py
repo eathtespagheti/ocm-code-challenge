@@ -6,7 +6,7 @@ class TuttiICorsiSpider(scrapy.Spider):
     allowed_domains = ['www.federica.eu/tutti-i-mooc']
     start_urls = ['http://www.federica.eu/tutti-i-mooc/']
 
-    def parse(self, response):
+    def parse_base_info(self, response):
         for course in response.css('div.mooc-main-box'):
             titolo_box = course.css('div.titolo-box')
             link = titolo_box.css('a')
@@ -24,3 +24,6 @@ class TuttiICorsiSpider(scrapy.Spider):
                 'teacher': course.css('div.docente-box::text').get(),
                 'short_description': course.css('p.abstract-box::text').get()
             }
+
+    def parse(self, response):
+        yield from self.parse_base_info(response)
