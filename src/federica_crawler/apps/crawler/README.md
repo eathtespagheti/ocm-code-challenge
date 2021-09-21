@@ -1,6 +1,6 @@
 # Scrapy for federica.eu website
 
-Scrapy projects for scraping courses from Federica website
+Scrapy projects for scraping courses from [Federica](https://www.federica.eu) website
 
 ## How to run
 
