@@ -15,9 +15,6 @@ class Status(models.Model):
     def __str__(self):
         return self.value
 
-    def get_absolute_url(self):
-        return reverse("Status_detail", kwargs={"pk": self.pk})
-
 
 class Area(models.Model):
     """This model represent a Course area"""
@@ -29,9 +26,6 @@ class Area(models.Model):
 
     def __str__(self):
         return self.value
-
-    def get_absolute_url(self):
-        return reverse("area_detail", kwargs={"pk": self.pk})
 
 
 class Teacher(models.Model):
@@ -45,9 +39,6 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse("teacher_detail", kwargs={"pk": self.pk})
 
 
 class Course(models.Model):
@@ -69,6 +60,3 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
-
-    def get_absolute_url(self):
-        return reverse("Course_detail", kwargs={"pk": self.pk})
