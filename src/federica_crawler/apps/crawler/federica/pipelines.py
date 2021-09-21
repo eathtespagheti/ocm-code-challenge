@@ -18,8 +18,8 @@ class TitlePipeline:
         adapter = ItemAdapter(item)
         if not adapter.get('title'):
             raise DropItem(f"Missing title in {item}")
-
-        return item
+        else:
+            return item
 
 
 class NotNullPipeline:
@@ -38,17 +38,18 @@ class NotNullPipeline:
         """
 
         adapter = ItemAdapter(item)
-        if adapter.get('url') == None:
+
+        if not adapter.get('url'):
             adapter['url'] = ''
-        if adapter.get('area') == None:
+        if not adapter.get('area'):
             adapter['area'] = ''
-        if adapter.get('status') == None:
+        if not adapter.get('status'):
             adapter['status'] = ''
-        if adapter.get('teacher') == None:
+        if not adapter.get('teacher'):
             adapter['teacher'] = ''
-        if adapter.get('short_description') == None:
+        if not adapter.get('short_description'):
             adapter['short_description'] = ''
-        if adapter.get('description') == None:
+        if not adapter.get('description'):
             adapter['description'] = ''
 
         return item
