@@ -60,5 +60,8 @@ class SaveItemPipeline:
 
     def process_item(self, item: CourseItem, spider) -> CourseItem:
         """Check if Item it's already present in database, if not saves it"""
-        item.save()
-        return item
+        if CourseItem.django_model.objects.filter(title=item['title']):
+            raise DropItem(f"Duplicated course title for {item['title']}")
+        else:
+            item.save()
+            return item
