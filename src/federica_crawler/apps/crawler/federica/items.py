@@ -3,10 +3,8 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+from apps.crawler.models import Course
+from scrapy_djangoitem import DjangoItem
 
-
-class FedericaItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class CourseItem(DjangoItem):
+    django_model = Course

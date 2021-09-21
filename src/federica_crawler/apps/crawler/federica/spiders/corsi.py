@@ -1,5 +1,5 @@
 import scrapy
-from .models import CourseItem
+from apps.crawler.federica.items import CourseItem
 
 
 class CorsiSpider(scrapy.Spider):
