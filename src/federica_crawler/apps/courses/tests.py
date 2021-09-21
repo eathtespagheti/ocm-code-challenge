@@ -1,7 +1,10 @@
 from django.test import TestCase
 from .models import Status, Area, Teacher, Course
 
+
 class StatusTestCase(TestCase):
+    '''Test Status model'''
+
     def setUp(self):
         Status.objects.create(value="test")
 
@@ -10,7 +13,10 @@ class StatusTestCase(TestCase):
         s = Status.objects.get(value="test")
         self.assertEqual(s.__str__(), 'test')
 
+
 class AreaTestCase(TestCase):
+    '''Test Area model'''
+
     def setUp(self):
         Area.objects.create(value="test")
 
@@ -19,7 +25,10 @@ class AreaTestCase(TestCase):
         s = Area.objects.get(value="test")
         self.assertEqual(s.__str__(), 'test')
 
+
 class TeacherTestCase(TestCase):
+    '''Test Teacher model'''
+
     def setUp(self):
         Teacher.objects.create(name="test")
 
@@ -28,7 +37,10 @@ class TeacherTestCase(TestCase):
         s = Teacher.objects.get(name="test")
         self.assertEqual(s.__str__(), 'test')
 
+
 class CourseTestCase(TestCase):
+    '''Test Course model'''
+
     def setUp(self):
         Course.objects.create(title="test")
 
