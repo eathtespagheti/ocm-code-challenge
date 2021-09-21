@@ -1,3 +1,6 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
 <form action="button_actions" method="GET">
     <input type="submit" value="Update" name="scrape">
     <input type="submit" value="Delete" name="delete">
@@ -7,3 +10,4 @@
         <li><a href="{% url 'courses:detail' course.id %}">{{ course.title }}</a></li>
     {% endfor %}
 </ul>
+{% endblock content %}
