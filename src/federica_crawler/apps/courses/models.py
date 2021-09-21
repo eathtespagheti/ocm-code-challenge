@@ -6,8 +6,7 @@ from django.utils.translation import gettext as _
 class Status(models.Model):
     """This model represent a Course Status"""
 
-    value = models.CharField(max_length=50, blank=True,
-                             default='', unique=True)
+    value = models.CharField(max_length=50, unique=True)
 
     class Meta:
         verbose_name = _("Status")
@@ -22,8 +21,7 @@ class Status(models.Model):
 
 class Area(models.Model):
     """This model represent a Course area"""
-    value = models.CharField(max_length=50, blank=True,
-                             default='', unique=True)
+    value = models.CharField(max_length=50, unique=True)
 
     class Meta:
         verbose_name = _("Area")
@@ -39,8 +37,7 @@ class Area(models.Model):
 class Teacher(models.Model):
     """This model represent a Course teacher"""
 
-    name = models.CharField(max_length=100, blank=True,
-                            default='', unique=True)
+    name = models.CharField(max_length=100, unique=True)
 
     class Meta:
         verbose_name = _("Teacher")
