@@ -9,4 +9,4 @@ RUN pip3 install -r requirements.txt
 RUN rm requirements.txt
 RUN apk del build-deps
 ENV PYTHONPATH=/webapp
-CMD [ "django-admin", "runserver", "0.0.0.0:8000" ]
+CMD [ "/webapp/bootstrap.sh" ]

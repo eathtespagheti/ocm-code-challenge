@@ -11,7 +11,15 @@ services:
     user: 1000:1000
     environment: 
       - DJANGO_SETTINGS_MODULE=federica_crawler.settings
+      - ADMIN_NAME=superuser
+      - ADMIN_EMAIL=superuser@example.com
+    secrets:
+      - django-admin-password
     volumes:
       - ../src/federica_crawler:/webapp
     ports: 
       - 8000:8000
+
+secrets:
+  django-admin-password:
+    file: secrets/adminPassword
