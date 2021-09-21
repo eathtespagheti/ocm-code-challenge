@@ -5,9 +5,11 @@
 
 
 # useful for handling different item types with a single interface
+import typing
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 from apps.crawler.items import CourseItem
+from apps.courses.models import Status
 
 
 class TitlePipeline:
@@ -18,8 +20,8 @@ class TitlePipeline:
         adapter = ItemAdapter(item)
         if not adapter.get('title'):
             raise DropItem(f"Missing title in {item}")
-        else:
-            return item
+
+        return item
 
 
 class NotNullPipeline:
@@ -58,10 +60,19 @@ class NotNullPipeline:
 class SaveItemPipeline:
     """Pipeline that ensure there are no duplicates and saves Item to database"""
 
+    def get_status(self, item: CourseItem) -> typing.Union[Status, None]:
+        """Check if status it's already saved in db, then return the right status instance for the item"""
+        adapter = ItemAdapter(item)
+        if adapter.get('status'):
+            return Status.objects.get_or_create(value=adapter.get('status'))[0]
+        else:
+            return None
+
     def process_item(self, item: CourseItem, spider) -> CourseItem:
         """Check if Item it's already present in database, if not saves it"""
         if CourseItem.django_model.objects.filter(title=item['title']):
             raise DropItem(f"Duplicated course title for {item['title']}")
-        else:
-            item.save()
-            return item
+
+        item['status'] = self.get_status(item)
+        item.save()
+        return item
