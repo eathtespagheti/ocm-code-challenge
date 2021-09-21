@@ -9,7 +9,7 @@ import typing
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 from apps.crawler.items import CourseItem
-from apps.courses.models import Status
+from apps.courses.models import Status, Teacher, Area
 
 
 class TitlePipeline:
@@ -60,6 +60,14 @@ class NotNullPipeline:
 class SaveItemPipeline:
     """Pipeline that ensure there are no duplicates and saves Item to database"""
 
+    def get_area(self, item: CourseItem) -> typing.Union[Area, None]:
+        """Check if area it's already saved in db, then return the right area instance for the item"""
+        adapter = ItemAdapter(item)
+        if adapter.get('area'):
+            return Area.objects.get_or_create(value=adapter.get('area'))[0]
+        else:
+            return None
+
     def get_status(self, item: CourseItem) -> typing.Union[Status, None]:
         """Check if status it's already saved in db, then return the right status instance for the item"""
         adapter = ItemAdapter(item)
@@ -68,11 +76,21 @@ class SaveItemPipeline:
         else:
             return None
 
+    def get_teacher(self, item: CourseItem) -> typing.Union[Teacher, None]:
+        """Check if teacher it's already saved in db, then return the right teacher instance for the item"""
+        adapter = ItemAdapter(item)
+        if adapter.get('teacher'):
+            return Teacher.objects.get_or_create(name=adapter.get('teacher'))[0]
+        else:
+            return None
+
     def process_item(self, item: CourseItem, spider) -> CourseItem:
         """Check if Item it's already present in database, if not saves it"""
         if CourseItem.django_model.objects.filter(title=item['title']):
             raise DropItem(f"Duplicated course title for {item['title']}")
 
+        item['area'] = self.get_area(item)
         item['status'] = self.get_status(item)
+        item['teacher'] = self.get_teacher(item)
         item.save()
         return item
