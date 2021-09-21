@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
-from scrapy.crawler import CrawlerProcess
+from scrapy.crawler import CrawlerRunner
 from apps.crawler.spiders.corsi import CorsiSpider
 from apps.crawler.settings import settings
+from twisted.internet import reactor
 
-process = CrawlerProcess(settings=settings)
 
-process.crawl(CorsiSpider)
-process.start()  # the script will block here until the crawling is finished
+def collect_data():
+    """Collect data using CorsiSpider and load it in the db"""
+
+    runner = CrawlerRunner(settings=settings)
+    runner.crawl(CorsiSpider)
+    d = runner.join()
+    d.addBoth(lambda _: reactor.stop())
+    reactor.run()
+
