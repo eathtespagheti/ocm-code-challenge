@@ -17,7 +17,7 @@ class CorsiSpider(scrapy.Spider):
 
         course['description'] = ' '.join(
             description_div.css('p::text, strong::text').getall())
-            
+
         return course.__dict__.get('_values', None)
 
     def parse_base_info(self, response):
@@ -44,7 +44,6 @@ class CorsiSpider(scrapy.Spider):
             if self.deep:
                 yield details_request
             else:
-                out.save()
                 yield out.__dict__.get('_values', None)
 
     def start_requests(self):
