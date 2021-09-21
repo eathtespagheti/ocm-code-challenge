@@ -27,3 +27,12 @@ class TeacherTestCase(TestCase):
         """Taste name field and __str__"""
         s = Teacher.objects.get(name="test")
         self.assertEqual(s.__str__(), 'test')
+
+class CourseTestCase(TestCase):
+    def setUp(self):
+        Teacher.objects.create(name="test")
+
+    def test_has_title(self):
+        """Taste name field and __str__"""
+        s = Teacher.objects.get(name="test")
+        self.assertEqual(s.__str__(), 'test')
