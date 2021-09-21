@@ -1,5 +1,7 @@
 from django.views import generic
+from django.shortcuts import render
 from .models import Course
+from apps.crawler.run_crawler import collect_data
 
 
 class IndexView(generic.ListView):
@@ -14,3 +16,9 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Course
     template_name = 'course/detail.html'
+
+
+def scrape(request):
+    if(request.GET.get('scrapebtn')):
+        collect_data()
+    return render(request, 'course/scraping.html')
