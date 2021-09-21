@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Status, Area, Teacher
+from .models import Status, Area, Teacher, Course
 
 class StatusTestCase(TestCase):
     def setUp(self):
@@ -30,9 +30,9 @@ class TeacherTestCase(TestCase):
 
 class CourseTestCase(TestCase):
     def setUp(self):
-        Teacher.objects.create(name="test")
+        Course.objects.create(title="test")
 
     def test_has_title(self):
-        """Taste name field and __str__"""
-        s = Teacher.objects.get(name="test")
+        """Taste title field and __str__"""
+        s = Course.objects.get(title="test")
         self.assertEqual(s.__str__(), 'test')
