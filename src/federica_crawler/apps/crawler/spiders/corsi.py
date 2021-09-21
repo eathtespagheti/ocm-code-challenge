@@ -1,10 +1,10 @@
 import typing
 import scrapy
-from apps.crawler.federica.items import CourseItem
+from apps.crawler.items import CourseItem
 
 
 class CorsiSpider(scrapy.Spider):
-    name = 'apps.crawler.federica.spiders.corsi'
+    name = 'apps.crawler.spiders.corsi'
     allowed_domains = ['federica.eu']
     url = 'http://www.federica.eu/tutti-i-mooc'
 

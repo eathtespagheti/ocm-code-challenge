@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'scrapy_djangoitem',
-    'apps.crawler.apps.CrawlerConfig'
+    'apps.courses.apps.CoursesConfig'
 ]
 
 MIDDLEWARE = [

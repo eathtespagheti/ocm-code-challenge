@@ -10,8 +10,8 @@ settings = {
 
     'BOT_NAME': 'federica',
 
-    'SPIDER_MODULES': ['apps.crawler.federica.spiders'],
-    'NEWSPIDER_MODULE': 'apps.crawler.federica.spiders',
+    'SPIDER_MODULES': ['apps.crawler.spiders'],
+    'NEWSPIDER_MODULE': 'apps.crawler.spiders',
 
 
     # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -23,8 +23,8 @@ settings = {
     # Configure item pipelines
     # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
     'ITEM_PIPELINES': {
-        'apps.crawler.federica.pipelines.TitlePipeline': 300,
-        'apps.crawler.federica.pipelines.NotNullPipeline': 301,
-        'apps.crawler.federica.pipelines.SaveItemPipeline': 302,
+        'apps.crawler.pipelines.TitlePipeline': 300,
+        'apps.crawler.pipelines.NotNullPipeline': 301,
+        'apps.crawler.pipelines.SaveItemPipeline': 302,
     },
 }

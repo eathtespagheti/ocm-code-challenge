@@ -7,7 +7,7 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
-from apps.crawler.federica.items import CourseItem
+from apps.crawler.items import CourseItem
 
 
 class TitlePipeline:

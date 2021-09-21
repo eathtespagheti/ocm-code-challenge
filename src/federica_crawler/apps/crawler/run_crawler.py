@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from scrapy.crawler import CrawlerProcess
-from apps.crawler.federica.spiders.corsi import CorsiSpider
-from apps.crawler.federica.settings import settings
+from apps.crawler.spiders.corsi import CorsiSpider
+from apps.crawler.settings import settings
 
 process = CrawlerProcess(settings=settings)
 
