@@ -27,7 +27,7 @@ class ButtonActions(TemplateResponse):
     """Read which button has been clicked from the response and execute the required actions rendering the right template"""
 
     def scrape(self):
-        """Call scrapy crawler to load data in the db"""
+        """Call scrapy crawler with the right parameters from form"""
         deep=None
         if self.request.GET.get('deepCheck'):
             deep = 'True'

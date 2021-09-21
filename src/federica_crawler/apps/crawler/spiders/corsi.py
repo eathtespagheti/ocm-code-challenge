@@ -9,6 +9,7 @@ class CorsiSpider(scrapy.Spider):
     url = 'http://www.federica.eu/tutti-i-mooc'
 
     def parse_details(self, response, course: CourseItem) -> CourseItem:
+        """Parse detailf from single mooc page"""
         if self.lang == 'it':
             description_div = response.xpath(
                 '//div[./*[contains(text(), "Descrizione")]]')
@@ -22,6 +23,7 @@ class CorsiSpider(scrapy.Spider):
         return course
 
     def parse_base_info(self, response) -> typing.Generator:
+        """Parse basic info from all mooc page"""
         for course in response.css('div.mooc-main-box'):
             out = CourseItem()
 
@@ -48,6 +50,7 @@ class CorsiSpider(scrapy.Spider):
                 yield out
 
     def start_requests(self) -> typing.Generator:
+        """Manage args, replace internar variables and start the scraping process"""
         self.lang = getattr(self, 'lang', 'it')
         self.lang_parameter = '&lang=' + self.lang
         self.deep = getattr(self, 'deep', '')

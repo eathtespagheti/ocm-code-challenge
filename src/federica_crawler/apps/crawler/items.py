@@ -7,4 +7,5 @@ from apps.courses.models import Course
 from scrapy_djangoitem import DjangoItem
 
 class CourseItem(DjangoItem):
+    """Mirror between Course model from django and a Scrapy Item"""
     django_model = Course

@@ -7,6 +7,7 @@ from multiprocessing import Process, Queue
 
 # stolen from https://stackoverflow.com/questions/41495052/scrapy-reactor-not-restartable
 def run_spider(spider, *args, **kwargs):
+    """Run and manage correctly spiders and processes"""
     def f(q):
         try:
             runner = CrawlerRunner(settings=settings)
