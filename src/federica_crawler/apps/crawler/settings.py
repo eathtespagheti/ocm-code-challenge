@@ -25,6 +25,7 @@ settings = {
     'ITEM_PIPELINES': {
         'apps.crawler.pipelines.TitlePipeline': 300,
         'apps.crawler.pipelines.NotNullPipeline': 301,
-        'apps.crawler.pipelines.SaveItemPipeline': 302,
+        'apps.crawler.pipelines.StripWhitespacesPipeline': 302,
+        'apps.crawler.pipelines.SaveItemPipeline': 303,
     },
 }

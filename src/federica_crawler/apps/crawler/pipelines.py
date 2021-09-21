@@ -56,6 +56,24 @@ class NotNullPipeline:
 
         return item
 
+class StripWhitespacesPipeline:
+    """Remove excess whitespaces from fields"""
+
+    def process_item(self, item: CourseItem, spider) -> CourseItem:
+        """Check and remove leading and trailing whitespaces from strings"""
+
+        adapter = ItemAdapter(item)
+
+        adapter['title'] = str(adapter['title']).strip()
+        adapter['url'] = str(adapter['url']).strip()
+        adapter['area'] = str(adapter['area']).strip()
+        adapter['status'] = str(adapter['status']).strip()
+        adapter['teacher'] = str(adapter['teacher']).strip()
+        adapter['short_description'] = str(adapter['short_description']).strip()
+        adapter['description'] = str(adapter['description']).strip()
+
+        return item
+
 
 class SaveItemPipeline:
     """Pipeline that ensure there are no duplicates and saves Item to database"""
