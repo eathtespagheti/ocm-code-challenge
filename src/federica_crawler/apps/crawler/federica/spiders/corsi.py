@@ -1,3 +1,4 @@
+import typing
 import scrapy
 from apps.crawler.federica.items import CourseItem
 
@@ -7,7 +8,7 @@ class CorsiSpider(scrapy.Spider):
     allowed_domains = ['federica.eu']
     url = 'http://www.federica.eu/tutti-i-mooc'
 
-    def parse_details(self, response, course: CourseItem):
+    def parse_details(self, response, course: CourseItem) -> CourseItem:
         if self.lang == 'it':
             description_div = response.xpath(
                 '//div[./*[contains(text(), "Descrizione")]]')
@@ -18,9 +19,9 @@ class CorsiSpider(scrapy.Spider):
         course['description'] = ' '.join(
             description_div.css('p::text, strong::text').getall())
 
-        return course.__dict__.get('_values', None)
+        return course
 
-    def parse_base_info(self, response):
+    def parse_base_info(self, response) -> typing.Generator:
         for course in response.css('div.mooc-main-box'):
             out = CourseItem()
 
@@ -44,9 +45,9 @@ class CorsiSpider(scrapy.Spider):
             if self.deep:
                 yield details_request
             else:
-                yield out.__dict__.get('_values', None)
+                yield out
 
-    def start_requests(self):
+    def start_requests(self) -> typing.Generator:
         self.lang = getattr(self, 'lang', 'it')
         self.lang_parameter = '&lang=' + self.lang
         self.deep = getattr(self, 'deep', '')
