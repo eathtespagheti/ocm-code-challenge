@@ -9,7 +9,7 @@ import typing
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 from apps.crawler.items import CourseItem
-from apps.courses.models import Status, Teacher, Area
+from apps.courses.models import Status, Teacher, Area, Course
 
 
 class TitlePipeline:
@@ -56,6 +56,7 @@ class NotNullPipeline:
 
         return item
 
+
 class StripWhitespacesPipeline:
     """Remove excess whitespaces from fields"""
 
@@ -69,7 +70,8 @@ class StripWhitespacesPipeline:
         adapter['area'] = str(adapter['area']).strip()
         adapter['status'] = str(adapter['status']).strip()
         adapter['teacher'] = str(adapter['teacher']).strip()
-        adapter['short_description'] = str(adapter['short_description']).strip()
+        adapter['short_description'] = str(
+            adapter['short_description']).strip()
         adapter['description'] = str(adapter['description']).strip()
 
         return item
@@ -102,10 +104,21 @@ class SaveItemPipeline:
         else:
             return None
 
+    def check_duplicate(self, item: CourseItem):
+        """Check if two scraped Courses with the same title have also the same url
+
+        If they have both title and url equal Drop the item
+        """
+        same_title = CourseItem.django_model.objects.filter(
+            title=item['title'])
+        if same_title and Course(same_title.first()).url == item['url']:
+            raise DropItem(
+                f"Duplicated course title and url for {item['title'], item['url']}")
+        return item
+
     def process_item(self, item: CourseItem, spider) -> CourseItem:
         """Check if Item it's already present in database, if not saves it"""
-        if CourseItem.django_model.objects.filter(title=item['title']):
-            raise DropItem(f"Duplicated course title for {item['title']}")
+        self.check_duplicate(item)
 
         item['area'] = self.get_area(item)
         item['status'] = self.get_status(item)
