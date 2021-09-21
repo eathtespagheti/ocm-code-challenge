@@ -5,9 +5,28 @@
     <input type="submit" value="Update" name="scrape">
     <input type="submit" value="Delete" name="delete">
 </form>
-<ul>
-    {% for course in courses %}
-        <li><a href="{% url 'courses:detail' course.id %}">{{ course.title }}</a></li>
-    {% endfor %}
-</ul>
+
+<table class="table table-striped">
+    <caption>Courses list</caption>
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Area</th>
+            <th scope="col">Status</th>
+            <th scope="col">Teacher</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for course in courses %}
+        <tr>
+            <th scope="row"><a href="{% url 'courses:detail' course.id %}">{{ course.title }}</a></th>
+            <td>{{ course.area }}</td>
+            <td>{{ course.status }}</td>
+            <td>{{ course.teacher }}</td>
+            <td>{{ course.short_description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock content %}
