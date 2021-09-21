@@ -8,6 +8,8 @@
     django-admin migrate --noinput
     adminPassword=$(cat /run/secrets/django-admin-password)
 
+    [ -z "$adminPassword" ] && adminPassword="$ADMIN_PASSWORD"
+
     # if both ADMIN_NAME and adminPassword exists
     [ -n "$ADMIN_NAME" ] && [ -n "$adminPassword" ] && {
         echo "from django.contrib.auth.models import User; User.objects.create_superuser('$ADMIN_NAME', '$ADMIN_EMAIL', '$adminPassword')" | django-admin shell
