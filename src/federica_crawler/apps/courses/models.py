@@ -1,7 +1,7 @@
 from django.db import models
 
 class Course(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     url = models.URLField(blank=True, default='')
     area = models.CharField(max_length=200, blank=True, default='')
     status = models.CharField(max_length=200, blank=True, default='')
