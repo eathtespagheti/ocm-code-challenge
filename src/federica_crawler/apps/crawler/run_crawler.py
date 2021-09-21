@@ -6,11 +6,11 @@ from twisted.internet import reactor
 from multiprocessing import Process, Queue
 
 # stolen from https://stackoverflow.com/questions/41495052/scrapy-reactor-not-restartable
-def run_spider(spider):
+def run_spider(spider, *args, **kwargs):
     def f(q):
         try:
             runner = CrawlerRunner(settings=settings)
-            deferred = runner.crawl(spider)
+            deferred = runner.crawl(spider, args=args, kwargs=kwargs)
             deferred.addBoth(lambda _: reactor.stop())
             reactor.run()
             q.put(None)
@@ -27,7 +27,7 @@ def run_spider(spider):
         raise result
 
 
-def collect_data():
+def collect_data(*args, **kwargs):
     """Collect data using CorsiSpider and load it in the db"""
 
-    run_spider(CorsiSpider)
+    run_spider(CorsiSpider, args=args, kwargs=kwargs)

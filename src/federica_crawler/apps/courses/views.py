@@ -28,7 +28,16 @@ class ButtonActions(TemplateResponse):
 
     def scrape(self):
         """Call scrapy crawler to load data in the db"""
-        collect_data()
+        deep=None
+        if self.request.GET.get('deepCheck'):
+            deep = 'True'
+        
+        language = self.request.GET.get('languageSelect')
+        lang=None
+        if language:
+            lang = language
+
+        collect_data(deep=deep, lang=lang)
         self.template_name = 'courses/actions/scrape.html'
 
     def delete(self):
@@ -38,8 +47,8 @@ class ButtonActions(TemplateResponse):
 
     def __init__(self, request):
         self.request = request
-        if(self.request.GET.get('scrape')):
+        if self.request.GET.get('scrape'):
             self.scrape()
-        if(self.request.GET.get('delete')):
+        if self.request.GET.get('delete'):
             self.delete()
         super().__init__(request, self.template_name)
