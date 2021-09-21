@@ -5,5 +5,5 @@ app_name = 'courses'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
-    path('scrape/', views.scrape, name='scrape'),
+    path('button_actions/', views.buttons, name='scrape'),
 ]
