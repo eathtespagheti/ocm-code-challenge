@@ -5,7 +5,7 @@ from apps.crawler.run_crawler import collect_data
 
 
 class IndexView(generic.ListView):
-    template_name = 'course/index.html'
+    template_name = 'courses/index.html'
     context_object_name = 'courses'
 
     def get_queryset(self):
@@ -15,10 +15,10 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Course
-    template_name = 'course/detail.html'
+    template_name = 'courses/detail.html'
 
 
 def scrape(request):
     if(request.GET.get('scrapebtn')):
         collect_data()
-    return render(request, 'course/scraping.html')
+    return render(request, 'courses/scraping.html')
