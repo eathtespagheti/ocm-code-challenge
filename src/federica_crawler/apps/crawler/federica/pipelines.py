@@ -6,8 +6,16 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+from scrapy.exceptions import DropItem
+from apps.crawler.federica.items import CourseItem
 
 
-class FedericaPipeline:
-    def process_item(self, item, spider):
-        return item
+class TitlePipeline:
+    """Pipeline that ensure every item has a title"""
+
+    def process_item(self, item: CourseItem, spider):
+        """Check if item has a title field, in case it's blank or None drop the Item"""
+        adapter = ItemAdapter(item)
+        if not adapter.get('title'):
+            raise DropItem(f"Missing title in {item}")
+        item.save()
