@@ -1,6 +1,22 @@
 {% extends 'courses/base.html' %}
 
 {% block content %}
-<h1>{{ course.title }}</h1>
-<p>{{ course.short_description }}</p>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ course.title }}</h5>
+        <h5 class="card-subtitle mb-2 text-muted">{{ course.teacher }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ course.area }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">{{ course.status }}</h6>
+        <p class="card-text">
+            {% if course.description %}
+                {{ course.description }}
+            {% else %}
+                {{ course.short_description }}
+            {% endif %}
+        </p>
+        <a href="{{ course.url }}" class="card-link">Course page</a>
+    </div>
+</div>
+
+{% include 'courses/partials/go_back.html' %}
 {% endblock content %}
