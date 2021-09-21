@@ -53,7 +53,7 @@ class Teacher(models.Model):
 class Course(models.Model):
     """This model represent a single Course"""
 
-    title = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200)
     url = models.URLField(blank=True, default='')
     area = models.ForeignKey('Area', on_delete=models.SET_NULL, null=True)
     status = models.ForeignKey('Status', on_delete=models.SET_NULL, null=True)
