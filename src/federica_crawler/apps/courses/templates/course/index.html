@@ -1,0 +1,5 @@
+<ul>
+    {% for course in courses %}
+        <li><a href="{% url 'courses:detail' course.id %}">{{ course.title }}</a></li>
+    {% endfor %}
+</ul>
