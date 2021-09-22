@@ -17,4 +17,4 @@
     touch "$FIRSTRUN_CHECKFILE"
 }
 
-django-admin runserver 0.0.0.0:8000
+uwsgi --ini uWSGIData/uwsgi.ini
