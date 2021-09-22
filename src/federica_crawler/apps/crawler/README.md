@@ -30,3 +30,7 @@ All scraped data it's manipulated via 4 pipelines and then finally saved in the 
 * `NotNullPipeline`: Check all text based field for null values and replace them with blank strings
 * `StripWhitespacesPipeline`: Remove both leading and trailing whitespaces/tabs/newlines from strings
 * `SaveItemPipeline`: Manage all the saving tasks for the various models, avoids duplicates and find data for ForeignKeys in the database
+  
+### Tests
+
+There are some pipeline related tests in the django project, refer to [Django README](../../README.md#tests)

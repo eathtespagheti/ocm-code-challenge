@@ -52,6 +52,16 @@ All Views are in the [`apps.courses.views`](apps/courses/views.py) module:
 * `DetailView`: Manage details for Course instances
 * `ButtonActions`: Called from `buttons`, manage all the actions available form the form
 
+## Tests
+
+There are some tests for [`apps.courses.models`](apps/courses/models.py) in [`apps.courses.tests`](apps/courses/tests.py) and some pipelines tests in [`federica_crawler.tests`](federica_crawler/tests.py)
+
+All tests can be launched with
+
+```sh
+django-admin test
+```
+
 ## How to demo the project
 
 ### First run
