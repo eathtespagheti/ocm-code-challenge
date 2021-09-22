@@ -8,7 +8,6 @@ services:
       dockerfile: stack/dev/Dockerfile
     image: eathtespagheti/code-challenge:dev
     restart: always
-    user: 1000:1000
     environment: 
       - DJANGO_SETTINGS_MODULE=federica_crawler.settings
       - ADMIN_NAME=superuser
@@ -17,9 +16,23 @@ services:
       - django-admin-password
     volumes:
       - ../src/federica_crawler:/webapp
-    ports: 
-      - 8000:8000
+      - djangoStatic:/static
 
+  nginx:
+    image: nginx:alpine
+    restart: always
+    depends_on:
+      - crawler
+    ports:
+      - 8000:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/federica_crawler_nginx.conf
+      - ../src/federica_crawler/media:/webapp/media
+      - djangoStatic:/webapp/static
+      - ../src/federica_crawler/uWSGIData:/webapp/uWSGIData
+
+volumes:
+  djangoStatic:    
 secrets:
   django-admin-password:
     file: secrets/adminPassword
