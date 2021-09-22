@@ -1,5 +1,7 @@
 {% extends 'courses/base.html' %}
 
+{% block title %}{{ block.super }} - Scrape{% endblock title %}
+
 {% block content %}
 All data has been scraped, {% include 'courses/partials/go_back.html' %}
 {% endblock content %}
