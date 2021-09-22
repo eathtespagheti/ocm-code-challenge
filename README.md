@@ -22,5 +22,5 @@ As I've mentioned in the [Django README](src/federica_crawler/README.md#course),
 
 ### This it's not production ready
 
-Before hitting production this webapp needs at least a separate server for serving static files and a dedicated db.
+Before hitting production this webapp needs at least a dedicated db.
 Would be nice to add also some way to update scraped data and not just a delete and redownload approach like now.
